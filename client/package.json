@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node-dev client-test.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "node-dev": "^4.0.0",
     "readline-sync": "^1.4.10",
     "require": "^2.4.20"
   }

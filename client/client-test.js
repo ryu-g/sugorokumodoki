@@ -14,6 +14,11 @@ const reset   = '\u001b[0m'
 
 const local = `${green}[LOCAL]${reset}`
 const system = `${yellow}[SYSTEM]${reset}`
+
+const whiteMessage = ( message ) =>{
+  return `${white}${message}${reset}`
+}
+
 console.log(`${local} connecting to ${accessurl}...`)
 rl = readline.createInterface(process.stdin, process.stdout)
 rl.setPrompt('')
@@ -44,7 +49,7 @@ socket.on('reflesh', (data)=>{
 })
 
 socket.on('message', (data) => {
-  console.log(data)
+  console.log(whiteMessage(data))
 })
 
 socket.on('sugoroku', (data) => {

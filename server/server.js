@@ -108,18 +108,6 @@ io.on('connection', (socket) => {
 
   //通常メッセージ
   socket.on('message', (user, message) => {
-    /*
-    console.log(`\n${system}`);
-    console.log(`AllUserList : ${AllUserList}`);
-    console.log(`game_playing : ${game_playing}`);
-    console.log(`numOfPlayers : ${numOfPlayers}`);
-
-    console.log(`actionCount : ${actionCount}`)
-    console.log(`numOfPlayers : ${numOfPlayers}`)
-    console.log(`actionCount / numOfPlayers : ${Math.round(actionCount % numOfPlayers)}`);
-    */
-    // socket.emit('message', `${system} : ${pickUser} san`)
-
     if(message ==``){
       return
     }
@@ -128,8 +116,6 @@ io.on('connection', (socket) => {
         console.log(`data is 1`);
         if(game_playing){
           socket.emit('throwDice')
-          // socket.broadcast.emit('throwDice')
-          // sugoroku(socket, turn, numOfPlayers, goal, top, actionCount)
         }
         break
 
@@ -151,7 +137,6 @@ io.on('connection', (socket) => {
         if (playerCount == connectPlayers.size){
           data = `\n${system} ${cyan}${user}${reset}さんがすごろくにエントリーしました。\n${system} 全員がすごろくにエントリーしました。始まります。`
           io.sockets.emit('message', data)
-          // io.sockets.emit('join', "やる？")
           game_playing = true
           sugorokuInit(socket, turn, numOfPlayers, goal, top, actionCount)
           return
@@ -160,13 +145,11 @@ io.on('connection', (socket) => {
           io.sockets.emit('message', data)
           break
         }
-
       default :
         data = `${user} : ${message} `
         console.log(data)
-        socket.broadcast.emit('message', data)
+        io.sockets.emit('message', data)
     }
-    // console.dir(connectPlayers)
   })
 
   socket.on('disconnect', () => {
@@ -236,11 +219,9 @@ function PlayerData(name, id){
   this.diceID = 6
   this.position = 1
   this.entry = false
-  // console.log(`[server] generate user ${this.name}, ID is ${this.id}`);
 
   this.diceThrough = () => {
     return Math.floor(Math.random()*100)%this.diceID+1
-    //1からdiceIDまでの数字が出る
   }
   this.displayStatus = () => {
     message = `${gameMaster} ${cyan}${this.name}${reset}さんの現在位置は${this.position}です。\n`
