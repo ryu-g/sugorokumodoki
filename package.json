@@ -1,0 +1,16 @@
+{
+  "name": "sugoroku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sugoroku.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ryu-g",
+  "license": "ISC",
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "require": "^2.4.20",
+    "socket.io": "^2.3.0"
+  }
+}
