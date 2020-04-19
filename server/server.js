@@ -166,8 +166,9 @@ io.on('connection', (socket) => {
   })
 })
 
-
 function sugorokuInit(socket, playturn, numOfPlayers, goalScore, topScore, count){
+  connectPlayers.get(socket.id).initPosition()
+  console.log(`initialized position of ${socket.id}`);
   data = `${gameMaster} はい、それではすごろくを始めます`
   io.sockets.emit('sugoroku', data)
   list = `${gameMaster} ${cyan}参加者 : ${AllUserList} ${reset}`
@@ -178,7 +179,7 @@ function sugorokuInit(socket, playturn, numOfPlayers, goalScore, topScore, count
 }
 
 function sugoroku(socket, playturn, numOfPlayers, goalScore, topScore, count){
-  console.log(`roller socket-id : ${socket.id}`)
+  console.log(`diceRoller socket-id : ${socket.id}`)
   console.log(`playturn : ${playturn}`)
   console.log(`goalScore : ${goalScore}`)
   console.log(`topScore : ${topScore}`)
@@ -206,7 +207,7 @@ function sugoroku(socket, playturn, numOfPlayers, goalScore, topScore, count){
     game_playing = false
     message = `もう一度遊ぶ場合は${cyan}entry${reset}と入力してください`
     io.sockets.emit('reflesh', message )
-    console.log(message);
+    console.log("--- end game ---");
     for(key of connectPlayers.keys()){
       connectPlayers.get(key).entry = false
     }
@@ -219,6 +220,10 @@ function PlayerData(name, id){
   this.diceID = 6
   this.position = 1
   this.entry = false
+
+  this.initPosition =() =>{
+    this.position = 0
+  }
 
   this.diceThrough = () => {
     return Math.floor(Math.random()*100)%this.diceID+1
